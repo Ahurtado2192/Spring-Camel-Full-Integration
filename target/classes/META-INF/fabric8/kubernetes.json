@@ -6,8 +6,10 @@
     "kind" : "Service",
     "metadata" : {
       "annotations" : {
-        "prometheus.io/port" : "9779",
-        "prometheus.io/scrape" : "true"
+        "fabric8.io/git-commit" : "7f80caf2b769155a61c403b667695ca86d8d0c40",
+        "fabric8.io/git-branch" : "master",
+        "prometheus.io/scrape" : "true",
+        "prometheus.io/port" : "9779"
       },
       "labels" : {
         "expose" : "true",
@@ -36,6 +38,8 @@
     "kind" : "Deployment",
     "metadata" : {
       "annotations" : {
+        "fabric8.io/git-commit" : "7f80caf2b769155a61c403b667695ca86d8d0c40",
+        "fabric8.io/git-branch" : "master",
         "fabric8.io/metrics-path" : "dashboard/file/camel-routes.json/?var-project=camel-ex421&var-version=0.0.1-SNAPSHOT"
       },
       "labels" : {
@@ -58,6 +62,8 @@
       "template" : {
         "metadata" : {
           "annotations" : {
+            "fabric8.io/git-commit" : "7f80caf2b769155a61c403b667695ca86d8d0c40",
+            "fabric8.io/git-branch" : "master",
             "fabric8.io/metrics-path" : "dashboard/file/camel-routes.json/?var-project=camel-ex421&var-version=0.0.1-SNAPSHOT"
           },
           "labels" : {
@@ -76,8 +82,11 @@
                   "fieldPath" : "metadata.namespace"
                 }
               }
+            }, {
+              "name" : "JAVA_APP_DIR",
+              "value" : "/deployments"
             } ],
-            "image" : "springboot/camel-ex421:snapshot-200110-121612-0786",
+            "image" : "camel-ex421:latest",
             "imagePullPolicy" : "IfNotPresent",
             "name" : "spring-boot",
             "ports" : [ {

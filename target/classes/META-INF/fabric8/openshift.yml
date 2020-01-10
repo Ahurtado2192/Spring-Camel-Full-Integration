@@ -6,8 +6,10 @@ items:
   kind: Service
   metadata:
     annotations:
-      prometheus.io/port: "9779"
+      fabric8.io/git-commit: 7f80caf2b769155a61c403b667695ca86d8d0c40
+      fabric8.io/git-branch: master
       prometheus.io/scrape: "true"
+      prometheus.io/port: "9779"
     labels:
       expose: "true"
       provider: fabric8
@@ -26,9 +28,22 @@ items:
       provider: fabric8
       group: org.springboot
 - apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: camel-ex421
+  spec:
+    tags:
+    - from:
+        kind: ImageStreamImage
+        name: camel-ex421@sha256:3dc016456a7ee08a3c59ab63fe4c05dfa0114873b51f8c29edfbbc32f46f5b87
+        namespace: camel-spring-boot
+      name: latest
+- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     annotations:
+      fabric8.io/git-commit: 7f80caf2b769155a61c403b667695ca86d8d0c40
+      fabric8.io/git-branch: master
       fabric8.io/metrics-path: dashboard/file/camel-routes.json/?var-project=camel-ex421&var-version=0.0.1-SNAPSHOT
     labels:
       provider: fabric8
@@ -49,6 +64,8 @@ items:
     template:
       metadata:
         annotations:
+          fabric8.io/git-commit: 7f80caf2b769155a61c403b667695ca86d8d0c40
+          fabric8.io/git-branch: master
           fabric8.io/metrics-path: dashboard/file/camel-routes.json/?var-project=camel-ex421&var-version=0.0.1-SNAPSHOT
         labels:
           provider: fabric8
@@ -62,7 +79,9 @@ items:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          image: springboot/camel-ex421:snapshot-200110-121612-0786
+          - name: JAVA_APP_DIR
+            value: /deployments
+          image: camel-ex421:latest
           imagePullPolicy: IfNotPresent
           name: spring-boot
           ports:
@@ -85,3 +104,11 @@ items:
             privileged: false
     triggers:
     - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - spring-boot
+        from:
+          kind: ImageStreamTag
+          name: camel-ex421:latest
+      type: ImageChange

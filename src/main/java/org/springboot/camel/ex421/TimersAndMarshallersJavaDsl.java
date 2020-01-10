@@ -17,6 +17,7 @@ public class TimersAndMarshallersJavaDsl extends RouteBuilder {
 
     	from("timer:helloTimer?fixedRate=false&period=1000")
     	.id("jsonMarshallerTimer")
+    	.log("Hello world")
     	.setBody()
     		.constant(new Customer())
     	.marshal(jackson)

@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: camel-ex421
+spec:
+  tags:
+  - from:
+      kind: ImageStreamImage
+      name: camel-ex421@sha256:3dc016456a7ee08a3c59ab63fe4c05dfa0114873b51f8c29edfbbc32f46f5b87
+      namespace: camel-spring-boot
+    name: latest
